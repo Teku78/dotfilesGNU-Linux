@@ -1,0 +1,83 @@
+Config {
+
+	-- Aparence
+	font = "xft:FiraMono Nerd Font:pixelsize=15.6:style=bold:antialias=true:hinting=true"
+    , bgColor = "#242424"
+	--, fgColor = "#0FB9FF"
+	, position = TopW L 100
+	, alpha = 200
+	, border = BottomB
+	, borderColor = "#616161"
+
+	-- Comportamiento general
+	, lowerOnStart = True
+	, hideOnStart = False
+	, allDesktops = True
+	, overrideRedirect = True
+	, pickBroadest = False
+	, persistent = True
+
+	, commands = [
+		Run MultiCpu   [ "--template" , "|<fc=#EAECEE> <total>%</fc>"
+					   , "--Low"      , "50"
+					   , "--High"     , "90"
+					   , "--low"      , "#4cb944"
+					   , "--normal"   , "#f4e04d"
+					   , "--high"     , "#ce2d4f"
+					   ] 10
+
+	    , Run CoreTemp [ "--template" , "<core0>°C"
+					   , "--Low"      , "50"
+					   , "--High"     , "90"
+					   , "--low"      , "#4cb944"
+					   , "--normal"   , "#f4e04d"
+					   , "--high"     , "#ce2d4f"
+					   ] 10
+
+	    , Run Memory   [ "--template" , "<usedratio>%"
+					   , "--Low"     , "20"
+					   , "--High"    , "95"
+					   , "--low"     , "#4cb944"
+					   , "--normal"  , "#f4e04d"
+					   , "--high"    , "#ce2d4f"
+					   ] 10
+
+		, Run Battery  [ "--template" , "<left>% <timeleft>"
+					   , "--Low"      , "10"
+					   , "--High"     , "90"
+					   , "--low"      , "#ce2d4f"
+					   , "--normal"   , "#f4e04d"
+					   , "--high"     , "#4cb944"
+					   ] 10
+		, Run DynNetwork            [
+									"-template" , "<dev>: <tx>kB/s-<rx>kB/s"
+
+									,"--low" , "#f4e04d"
+									] 10
+
+		, Run Alsa "default" "Master" ["--template" , "<status>"
+									  , "--"
+									  , "-C" , "#4cb944"
+									  , "-c" , "#ce2d4f"
+									  , "-O" , "<volume>%"
+									  , "-o" , "婢 "
+									  , "--highs" , "墳 "
+									  , "--mediums" , "奔 "
+									  , "--lows" , "奄 "
+									  ]
+		, Run Date     "%d %b %Y %H:%M" "date" 600
+
+		, Run UnsafeStdinReader
+	]
+
+	, sepChar = "%"
+    , alignSep = "}{"
+	, template = "<fc=#0FB9FF,#fff></fc> %UnsafeStdinReader% }{ \
+	\<fc=#EAECEE>%multicpu%</fc>|\
+	\<fc=#EAECEE> %coretemp%</fc>|\
+	\<fc=#EAECEE> %memory%</fc>|\
+	\<fc=#EAECEE>%alsa:default:Master%</fc>|\
+	\%dynnetwork% |\
+	\<fc=#EAECEE> %battery%</fc>|\
+	\ %date%|"
+}
