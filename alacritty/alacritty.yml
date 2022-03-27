@@ -1,5 +1,10 @@
 
 #
+# Set environment variables
+env:
+    TERM: xterm-256color
+
+# Windows settings
 window:
     padding:
         x: 5
@@ -8,9 +13,9 @@ window:
     class:
       instance: Alacritty
       general: Alacritty
-      opacity: 1
+      opacity: 1.0
 
-        #    dimensions:
+        # dimensions:
         # columns: 60
         # lines: 100
 
@@ -47,8 +52,20 @@ font:
 
   size: 13.0
 
+  offset:
+    x: 0
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+live_config_reload: true
 draw_bold_text_with_bright_colors: true
 
+seletion:
+    save_to_clipboard: true
+cursor:
+    style: 'Underline'
 colors:
   primary:
     background: '#050608'
