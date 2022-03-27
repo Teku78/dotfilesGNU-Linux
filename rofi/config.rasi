@@ -1,0 +1,95 @@
+configuration {
+    modi: "drun";
+    font: "BlexMono Nerd Font 12";
+    show-icons: true;
+    /*icon-theme: "Papirus-dark";*/
+    display-drun: "X";
+    drun-display-format: "{name}";
+    sidebar-mode: false;
+}
+
+@theme "/dev/null"
+
+* {
+	bg: #010409;
+	fg: #C0CAF5;
+/*	accent: #f5758c; */
+	button:#10131a;
+	background-color: @bg;
+	text-color: @fg;
+}
+
+window {
+    border-radius: 1px;
+    width: 50%;
+    padding: 20px;
+    border-color: @button;
+    border: 1px;
+}
+
+prompt {
+    background-color: @button;
+    enabled: false;
+    padding: 0.5% 32px 0% -0.5%;
+   /* font: "JetBrains Mono Nerd Font 12";*/
+}
+
+entry {
+    placeholder: "Search";
+	background-color: @button;
+    placeholder-color: @fg;
+    expand: true;
+    padding: 0.2% 0.2% 0.2% 0.2%;
+}
+
+inputbar {
+    children: [ prompt, entry ];
+        background-color: @button;
+        expand:false;
+        border-radius: 2px;
+        margin: 0%;
+        padding: 8px;
+}
+
+listview {
+    columns: 4;
+    lines: 3;
+    cycle: false;
+    dynamic: true;
+    layout: vertical;
+}
+
+mainbox {
+    	children:                       [ inputbar, listview ];
+    	spacing:                       	2%;
+    	padding:                        2% 1% 2% 1%;
+}
+
+element {
+    	orientation: vertical;
+    	padding: 2% 0% 2% 0%;
+}
+
+element-icon {
+    size: 48px;
+    horizontal-align: 0.5;
+}
+
+element-text {
+    	expand:                         true;
+    	horizontal-align:               0.5;
+    	vertical-align:                 0.5;
+    	margin:                         0.5% 0.5% -0.5% 0.5%;
+}
+
+element-text, element-icon {
+	background-color:		inherit;
+	text-color:			inherit;
+}
+
+element selected {
+    	background-color:               @button;
+    	border-radius:                  3px;
+}
+
+/* vim:ft=css

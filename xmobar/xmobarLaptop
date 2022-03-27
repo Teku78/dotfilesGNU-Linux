@@ -1,0 +1,99 @@
+Config {
+    --
+	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=12:antialias=true:hinting=true"
+   --, additionalFonts = ["xft: :pixelsize=17:antialias=true:hinting=true"]
+    , bgColor = "#010409" --050608
+	, fgColor = "#ff9801"
+	, position = TopW C 100 -- TopSize L 100 1
+    --, textOffset = -50
+    --, textOffsets = [20,21,20,21]
+    --, iconOffset = -1
+	--, alpha = 150
+	, border = BottomB
+	, borderColor = "#0d1117"
+
+    --
+    , lowerOnStart = True
+    , hideOnStart = False
+    , allDesktops = True
+    , overrideRedirect = True
+    , pickBroadest = False
+    , persistent = False
+
+    , commands = [
+         Run MultiCpu [
+        "--template" , "<total>%"
+        , "--Low"    , "50"
+        , "--High"   , "90"
+        ] 10
+
+        ,Run MultiCoreTemp [
+         "--template" , "<maxpc>°C"
+        ,"--Low"      , "60"
+        , "--High"    , "90"
+        ] 10
+
+        ,Run Memory [
+         "--template" , "<usedratio>%"
+        ,"--Low"      , "20"
+        ,"--High"     , "95"
+        ] 10
+
+		,Run Battery [
+         "--template" , "<acstatus>"
+        ,"--Low"      , "10"
+        ,"--High"     , "90"
+      --,"-p" , "5"
+        ,"--"
+        ,"-O", "<fc=#ff9801> </fc><left>%" -- Charging
+        ,"-o", "<fc=#ff9801> </fc><left>%" -- State of charge
+        ,"-i", "<fc=#ff9801>ﮚ </fc><left>%"  -- Full charging
+        ,"-A", "10"
+        ,"-a", "notify-send 'Sin carga'"
+        ] 10
+
+        ,Run DynNetwork [
+         "--template" , "<dev> <rx> <tx>"
+        ,"--"
+        ,"--devices","wlan0,wlan1"
+        ] 10
+
+        ,Run Alsa "default" "Master" [
+         "--template" , "<status><volume>%"
+        ,"--"
+        ,"-c", "#06c383"
+        ,"-C", "#06c383"
+        ,"-O", ""
+        ,"-h", " "
+        ,"-m", " "
+        ,"-l", " "
+        ,"-o", " "
+          ]
+
+        ,Run Brightness [
+        "-t", "<percent>%"
+        ,"--"
+        ,"-D"
+        ,"/sys/class/backlight/intel_backlight"
+        ] 60
+
+        ,Run Date "%d %b %Y · %H:%M" "date" 600
+        --, Run StdinReader
+        , Run UnsafeStdinReader
+    ]
+
+	, sepChar = "%"
+    , alignSep = "}{"
+	, template = "<fc=#00afff,#1a1f25>  </fc><fc=#1a1f25,#010409></fc>%UnsafeStdinReader%}{\
+	\<fc=#181c26>  </fc><fc=#c2ff5f>礪 </fc><fc=#c0caf5>%multicpu%</fc>\
+	\<fc=#181c26> | </fc><fc=#29c1dc> </fc><fc=#c0caf5>%multicoretemp%</fc>\
+    \<fc=#181c26> | </fc><fc=#f1c40f>龍 </fc><fc=#c0caf5>%memory%</fc>\
+	\<fc=#181c26> | </fc><fc=#00afff>直 </fc><fc=#c0caf5>%dynnetwork%</fc>\
+	\<fc=#181c26> | </fc><fc=#c0caf5>%battery%</fc>\
+	\<fc=#181c26> | </fc><fc=#c0caf5>%alsa:default:Master%</fc>\
+    \<fc=#181c26> | </fc><fc=#b747f6> </fc><fc=#c0caf5>%bright%</fc>\
+	\<fc=#181c26> | </fc><fc=#ff3078> </fc><fc=#c0caf5>%date% hrs </fc>"
+
+}
+-- vim:ft=haskell
+

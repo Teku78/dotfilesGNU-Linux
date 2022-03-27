@@ -1,0 +1,29 @@
+Config {
+	-- Aparence
+	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=13:antialias=true:hinting=true"
+    , bgColor = "#050608"
+	--, fgColor = "#0FB9FF"
+	, position = TopW C 100
+	--, alpha = 255
+	, border = BottomB
+	, borderColor = "#1A1e24"
+
+	-- Comportamiento general
+	, lowerOnStart = False
+	, hideOnStart = False
+	, allDesktops = True
+	, overrideRedirect = False
+	, pickBroadest = False
+	, persistent = True
+
+	, commands = [
+		 Run Date     "%d %b %Y | %H:%M" "date" 600
+		, Run UnsafeStdinReader
+	]
+	, sepChar = "%"
+    , alignSep = "}{"
+	, template = "<fc=#C0CAF5,#363948>   </fc><fc=#363948,#050608></fc>%UnsafeStdinReader% }{ \
+	\<fc=#363948>  </fc><fc=#5B92FA> </fc><fc=#C0CAF5>%date%·hrs </fc>"
+}
+
+-- vim:ft=haskell
