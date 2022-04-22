@@ -3,14 +3,14 @@ Config {
 	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=12:antialias=true:hinting=true"
    --, additionalFonts = ["xft: :pixelsize=17:antialias=true:hinting=true"]
     , bgColor = "#010409" --050608
-	, fgColor = "#ff9801"
+	, fgColor = "#29c1dc"
 	, position = TopW C 100 -- TopSize L 100 1
     --, textOffset = -50
     --, textOffsets = [20,21,20,21]
     --, iconOffset = -1
 	--, alpha = 150
 	, border = BottomB
-	, borderColor = "#0d1117"
+	, borderColor = "#131c2a"
 
     --
     , lowerOnStart = True
@@ -84,15 +84,15 @@ Config {
 
 	, sepChar = "%"
     , alignSep = "}{"
-	, template = "<fc=#00afff,#1a1f25>  </fc><fc=#1a1f25,#010409></fc>%UnsafeStdinReader%}{\
-	\<fc=#181c26>  </fc><fc=#c2ff5f>礪 </fc><fc=#c0caf5>%multicpu%</fc>\
-	\<fc=#181c26> | </fc><fc=#29c1dc> </fc><fc=#c0caf5>%multicoretemp%</fc>\
-    \<fc=#181c26> | </fc><fc=#f1c40f>龍 </fc><fc=#c0caf5>%memory%</fc>\
-	\<fc=#181c26> | </fc><fc=#00afff>直 </fc><fc=#c0caf5>%dynnetwork%</fc>\
-	\<fc=#181c26> | </fc><fc=#c0caf5>%battery%</fc>\
-	\<fc=#181c26> | </fc><fc=#c0caf5>%alsa:default:Master%</fc>\
-    \<fc=#181c26> | </fc><fc=#b747f6> </fc><fc=#c0caf5>%bright%</fc>\
-	\<fc=#181c26> | </fc><fc=#ff3078> </fc><fc=#c0caf5>%date% hrs </fc>"
+	, template = "<fc=#00afff,#131c2a>  </fc><fc=#131c2a,#010409></fc>%UnsafeStdinReader%}{\
+	\<fc=#131c2a> | </fc><fc=#c2ff5f>礪 </fc><fc=#c0caf5>%multicpu%</fc>\
+	\<fc=#131c2a> | </fc><fc=#29c1dc> </fc><fc=#c0caf5>%multicoretemp%</fc>\
+    \<fc=#131c2a> | </fc><fc=#f1c40f>龍 </fc><fc=#c0caf5>%memory%</fc>\
+	\<fc=#131c2a> | </fc><fc=#00afff>直 </fc><fc=#c0caf5>%dynnetwork%</fc>\
+	\<fc=#131c2a> | </fc><fc=#c0caf5>%battery%</fc>\
+	\<fc=#131c2a> | </fc><fc=#c0caf5>%alsa:default:Master%</fc>\
+    \<fc=#131c2a> | </fc><fc=#b747f6> </fc><fc=#c0caf5>%bright%</fc>\
+	\<fc=#131c2a> | </fc><fc=#ff3078> </fc><fc=#c0caf5>%date% hrs </fc>"
 
 }
 -- vim:ft=haskell
