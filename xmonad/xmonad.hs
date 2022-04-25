@@ -6,12 +6,13 @@
 --  ██╔██╗ ██║╚██╔╝██║██║   ██║██║╚██╗██║██╔══██║██║  ██║
 -- ██╔╝ ██╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║██║  ██║██████╔╝
 -- ╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝
+-- =============================================================
 --
 import XMonad
-import System.IO
+import System.IO (hPutStrLn) -- for xmobar
 import System.Exit
 import Data.Monoid
-import Data.Map as M
+import qualified Data.Map as M
 import Data.Ratio --permite usar el operador '%'
 
 --import Graphics.X11.ExtraTypes.XF86
@@ -39,10 +40,7 @@ import XMonad.Actions.WithAll (sinkAll)
 import XMonad.Actions.Promote
 import XMonad.Actions.CycleWS -- to move windows
 import XMonad.Actions.CycleWindows
-
 import qualified XMonad.Actions.CycleWS as CWs -- girar las ventanas en la misma pantalla
-
---import XMonad.Hooks.ManageHelpers
 
 -- Layouts
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
@@ -58,11 +56,10 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, MIRROR, NOBORDERS))
 
-import XMonad.Prompt.Window
 
 
 
-myTerminal           = "alacritty" :: String     -- Terminal por defecto
+myTerminal           = "kitty" :: String     -- Terminal por defecto
 myModMask            = mod4Mask    :: KeyMask    -- Tecla master (windows)
 myBorderWidth        = 3           :: Dimension  -- Tamaño del borde de las ventanas
 myNormalBorderColor  = "#282f40"   :: String     -- Color de la ventana desenfocada
@@ -96,7 +93,14 @@ myManageHook = composeOne [
 
 -- Define the names of workpaces
 --
-myWorkSpaces = [" A "," B "," C "," D "]
+xmobarEscape :: String -> String
+xmobarEscape = concatMap doubleLts
+    where
+        doubleLts '<' = "<<"
+        doubleLts x = [x]
+
+myWorkSpaces :: [String]
+myWorkSpaces = (map xmobarEscape) $ [" 0 "," 1 "," 2 "," 3 "]
 --
 -- this is to show the number of windows in each workspace.
 windowCount :: X (Maybe String)
@@ -132,10 +136,10 @@ myLogHook one two = xmobarPP {
     ppOutput = \x -> hPutStrLn one x
                   >> hPutStrLn two x
 
-    , ppCurrent         = xmobarColor "#050608,#c0caf5" "" . wrap (xmobarColor"#050608,#c0caf5" "" "\xe0b0")(xmobarColor"#c0caf5" "" "\xe0b0")
+    , ppCurrent         = xmobarColor "#050608,#00fdd2" "" . wrap (xmobarColor"#050608,#00fdd2" "" "\xe0b0")(xmobarColor"#00fdd2" "" "\xe0b0")
     , ppVisible         = xmobarColor "#c0caf5" "" -- . wrap ("")("") -- . \s -> " \xf878 "
     , ppHiddenNoWindows = xmobarColor "#5d647e" ""
-    , ppHidden          = xmobarColor "#81e300" ""
+    , ppHidden          = xmobarColor "#ff427c" ""
     , ppTitle           = xmobarColor "#C0CAF5" "" . shorten 55
     --, ppLayout          = xmobarColor "#29c1dc" ""
     , ppSep             = "<fc=#5d647e> · </fc>"
@@ -168,9 +172,10 @@ myKeys = [
     , ("M-f"  , windows W.focusMaster)              -- Move to the master window
     , ("M-j"  , windows W.focusDown)
     , ("M-n"  , promote)                            -- Move focused window to master.
-    , ("M-S-f"  , sendMessage $ JumpToLayout "Full")
+    , ("M-a", sendMessage MirrorExpand)
+    , ("M-u", sendMessage $ JumpToLayout "full")
     -- Programs
-
+    , ("M-m", sendMessage ShrinkSlave)
     , ("M-S-p", spawn
        "flameshot screen -n 1 -p ~/Pictures/Screenshot/")       -- Take a screenshot of the current window / install flameshot
     , ("M-p"  , spawn "rofi -show drun")            -- Lauch then menu programs / install rofi
@@ -214,8 +219,8 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 main :: IO ()
 main = do
-    laptopBar      <- spawnPipe ("xmobar -x 1 $HOME/.xmonad/xmobar/xmobarLaptop")
-    extrMonitorBar <- spawnPipe ("xmobar -x 0 $HOME/.xmonad/xmobar/xmobarMonitor")
+    laptopBar      <- spawnPipe ("xmobar -x 0 $HOME/.xmonad/xmobar/xmobarLaptop")
+    extrMonitorBar <- spawnPipe ("xmobar -x 1 $HOME/.xmonad/xmobar/xmobarMonitor")
 
     xmonad . docks . ewmh . ewmhFullscreen $ def {
     terminal                = myTerminal
