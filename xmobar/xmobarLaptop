@@ -1,9 +1,10 @@
 Config {
     --
 	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=12:antialias=true:hinting=true"
-   --, additionalFonts = ["xft: :pixelsize=17:antialias=true:hinting=true"]
+   , additionalFonts = ["xft:Material Design Icons:pixelsize=14"
+                       ,"xft:Material Design Icons:pixelsize=15"]
     , bgColor = "#010409" --050608
-	, fgColor = "#29c1dc" -- Color just for number window
+	, fgColor = "#dde684" -- Color just for number window
 	, position = TopW C 100 -- TopSize L 100 1
     --, textOffset = -50
     --, textOffsets = [20,21,20,21]
@@ -45,9 +46,9 @@ Config {
         ,"--High"     , "90"
       --,"-p" , "5"
         ,"--"
-        ,"-O", "<fc=#ff9801> </fc><left>%" -- Charging
-        ,"-o", "<fc=#ff9801> </fc><left>%" -- State of charge
-        ,"-i", "<fc=#ff9801>ﮚ </fc><left>%"  -- Full charging
+        ,"-O", "<fc=#ff9801><fn=2>󰫃</fn> </fc><left>%" -- Charging
+        ,"-o", "<fc=#ff9801><fn=2>󰫇</fn> </fc><left>%" -- State of charge
+        ,"-i", "<fc=#ff9801><fn=2>󰫈</fn> </fc><left>%"  -- Full charging
         ,"-A", "10"
         ,"-a", "notify-send 'Sin carga'"
         ] 10
@@ -85,14 +86,14 @@ Config {
 	, sepChar = "%"
     , alignSep = "}{"
 	, template = "<fc=#00afff,#131c2a>  </fc><fc=#131c2a,#010409></fc>%UnsafeStdinReader%}{\
-	\<fc=#131c2a> | </fc><fc=#c2ff5f>礪 </fc><fc=#c0caf5>%multicpu%</fc>\
-	\<fc=#131c2a> | </fc><fc=#29c1dc> </fc><fc=#c0caf5>%multicoretemp%</fc>\
-    \<fc=#131c2a> | </fc><fc=#f1c40f>龍 </fc><fc=#c0caf5>%memory%</fc>\
-	\<fc=#131c2a> | </fc><fc=#00afff>直 </fc><fc=#c0caf5>%dynnetwork%</fc>\
-	\<fc=#131c2a> | </fc><fc=#c0caf5>%battery%</fc>\
-	\<fc=#131c2a> | </fc><fc=#c0caf5>%alsa:default:Master%</fc>\
-    \<fc=#131c2a> | </fc><fc=#b747f6> </fc><fc=#c0caf5>%bright%</fc>\
-	\<fc=#131c2a> | </fc><fc=#ff3078> </fc><fc=#c0caf5>%date% hrs </fc>"
+	\<fc=#131c2a> | </fc><fc=#c2ff5f><fn=2>󰍛</fn> </fc><fc=#bfc9f4>%multicpu%</fc>\
+	\<fc=#131c2a> | </fc><fc=#29c1dc><fn=2>󰈐</fn> </fc><fc=#bfc9f4>%multicoretemp%</fc>\
+    \<fc=#131c2a> | </fc><fc=#f1c40f><fn=2>󰓌</fn> </fc><fc=#bfc9f4>%memory%</fc>\
+	\<fc=#131c2a> | </fc><fc=#00afff><fn=2>󰒪</fn> </fc><fc=#bfc9f4>%dynnetwork%</fc>\
+	\<fc=#131c2a> | </fc><fc=#bfc9f4>%battery%</fc>\
+	\<fc=#131c2a> | </fc><fc=#bfc9f4>%alsa:default:Master%</fc>\
+    \<fc=#131c2a> | </fc><fc=#b170f3><fn=2>󰃠</fn> </fc><fc=#bfc9f4>%bright%</fc>\
+	\<fc=#131c2a> | </fc><fc=#eb5254><fn=2>󰃰</fn> </fc><fc=#bfc9f4>%date% hrs </fc>"
 
 }
 -- vim:ft=haskell

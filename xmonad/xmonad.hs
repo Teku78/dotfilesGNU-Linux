@@ -59,11 +59,11 @@ import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, MIRROR, NOB
 
 
 
-myTerminal           = "kitty" :: String     -- Terminal por defecto
+myTerminal           = "alacritty" :: String     -- Terminal por defecto
 myModMask            = mod4Mask    :: KeyMask    -- Tecla master (windows)
-myBorderWidth        = 3           :: Dimension  -- Tamaño del borde de las ventanas
-myNormalBorderColor  = "#282f40"   :: String     -- Color de la ventana desenfocada
-myFocusedBorderColor = "#c0caf5"   :: String     -- Color de la ventana activa
+myBorderWidth        = 2           :: Dimension  -- Tamaño del borde de las ventanas
+myNormalBorderColor  = "#3e4564"   :: String     -- Color de la ventana desenfocada
+myFocusedBorderColor = "#bfc9f4"   :: String     -- Color de la ventana activa
 myFocusFollowsMouse  = True        :: Bool
 myClickJustFocuses   = False       :: Bool
 
@@ -93,14 +93,22 @@ myManageHook = composeOne [
 
 -- Define the names of workpaces
 --
-xmobarEscape :: String -> String
-xmobarEscape = concatMap doubleLts
-    where
-        doubleLts '<' = "<<"
-        doubleLts x = [x]
+
 
 myWorkSpaces :: [String]
-myWorkSpaces = (map xmobarEscape) $ [" 0 "," 1 "," 2 "," 3 "]
+myWorkSpaces = map show [1..5 :: Int]
+
+currentWorkspace :: String -> String
+currentWorkspace _ = "<fn=1>\xF0BAF</fn>" -- pacman
+
+occupiedWorkspace :: String -> String
+occupiedWorkspace _ = "<fn=1>\xF02A0</fn>" -- ghost
+
+otherWorkspace :: String -> String
+otherWorkspace _ = "<fn=1>\xF09F5</fn>"
+
+
+
 --
 -- this is to show the number of windows in each workspace.
 windowCount :: X (Maybe String)
@@ -136,14 +144,15 @@ myLogHook one two = xmobarPP {
     ppOutput = \x -> hPutStrLn one x
                   >> hPutStrLn two x
 
-    , ppCurrent         = xmobarColor "#050608,#00fdd2" "" . wrap (xmobarColor"#050608,#00fdd2" "" "\xe0b0")(xmobarColor"#00fdd2" "" "\xe0b0")
-    , ppVisible         = xmobarColor "#c0caf5" "" -- . wrap ("")("") -- . \s -> " \xf878 "
-    , ppHiddenNoWindows = xmobarColor "#5d647e" ""
-    , ppHidden          = xmobarColor "#ff427c" ""
-    , ppTitle           = xmobarColor "#C0CAF5" "" . shorten 55
+   -- , ppCurrent         = xmobarColor "#050608,#bfc9f4" "" . wrap (xmobarColor"#050608,#bfc9f4" "" "\xe0b0")(xmobarColor"#bfc9f4" "" "\xe0b0") . currentWorkspace
+    , ppCurrent         = xmobarColor "#fbe32f" "" . currentWorkspace
+    , ppVisible         = xmobarColor "#7f9ebd" "" . otherWorkspace -- . wrap ("")("") -- . \s -> " \xf878 "
+    , ppHiddenNoWindows = xmobarColor "#223045" "" . occupiedWorkspace
+    , ppHidden          = xmobarColor "#5b92fa" "" . occupiedWorkspace
+    , ppTitle           = xmobarColor "#bfc9f4" "" . shorten 55
     --, ppLayout          = xmobarColor "#29c1dc" ""
     , ppSep             = "<fc=#5d647e> · </fc>"
-    , ppWsSep           = ""
+    , ppWsSep           = " "
     , ppUrgent          = xmobarColor "#C45500" "" . wrap "" "!"
     , ppExtras          =  [windowCount]
     --, ppOrder           = \(ws : l : t : ex) -> [ws,l] ++ex++ [t] -- default
@@ -177,7 +186,7 @@ myKeys = [
     -- Programs
     , ("M-m", sendMessage ShrinkSlave)
     , ("M-S-p", spawn
-       "flameshot screen -n 1 -p ~/Pictures/Screenshot/")       -- Take a screenshot of the current window / install flameshot
+       "flameshot screen -n 0 -d 1000 -p ~/Pictures/Screenshot/")       -- Take a screenshot of the current window / install flameshot
     , ("M-p"  , spawn "rofi -show drun")            -- Lauch then menu programs / install rofi
     , ("M-<Return>", spawn myTerminal)              -- Lauch terminal
     -- , ("M-S-s", spawn "firefox --private-window")   -- ;p
