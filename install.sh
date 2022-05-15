@@ -1,51 +1,48 @@
-#!/bin/bash
+#!/usr/bin/bash
+# Install and update my dotfiles with git and github
 
-#autor: teku
-
-: ' NOTES
-
-'
-echo Bash script for install my setup :v
 
 # it's better with prety colors, right...
 resetColor="\e[0m"
+fgRed="\033[0;32m"
+fgYellow="\033[0;33m"
 
-redB='#dd3333'
-gjreenB="\033[0;32m"
-yellowB="\033[0;33m"
+GITHUB_REPO="https://github.com/tekuHZ/dotfiles.git"
+DIR="$HOME/my_dots"
 
-#######################
-#   Install package   #
-#######################
+download_dotfiles() {
+    echo  -e "Creating a temporal directory"
+    mkdir -p "${DIR}"
 
-declare -a pgks=("vlc"
-                 "firefox"
-                 "feh"
-                 "xmobar"
-             )
-for pkg in ${pgks[@]}; do
-    echo $pkg
-done
-
-
+    echo  -e "Download dotfiles to ${DIR}"
+    git clone ${GITHUB_REPO} ${DIR}
+}
 
 link_dotfiles() {
-# Check for dir, if not found create it use the command mkdir
-listDir=(
-    "$HOME/.config/picom/"
-    "$HOME/.config/rofi/"
-    "$HOME/.config/dunst/"
-    )
-for i in $listDir
-do
-    if [ ! -d $i] then
-        echo $i
-    else
-        mkdir -vp $i
-    fi
-done
+    for dots in "$HOME/dotfiles"
+    do
+        if [ -d $dots ]
+        then
+            echo " $dots "
+        else
+            echo " no Exsiste"
+
+        fi
+
+    done
 
 
 }
+
+
+
+
+install_dots() {
+
+    #download_dotfiles
+    link_dotfiles
+}
+
+install_dots
 
 
