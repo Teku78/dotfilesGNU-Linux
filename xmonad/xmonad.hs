@@ -20,6 +20,10 @@ import XMonad.Hooks.ManageDocks
 
 import qualified XMonad.StackSet as W
 
+import XMonad.Layout.IndependentScreens
+import XMonad.Actions.Warp (warpToScreen)
+import Foreign.C (CInt)
+------------------------------------------------------------------------------------------
 -- Hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
@@ -33,7 +37,7 @@ import XMonad.Util.Cursor
 import XMonad.Util.EZConfig (additionalKeysP)
 
 import XMonad.Config.Desktop
-
+------------------------------------------------------------------------------------------
 -- windows actions
 import XMonad.Actions.UpdatePointer (updatePointer)
 import XMonad.Actions.WithAll (sinkAll)
@@ -41,7 +45,7 @@ import XMonad.Actions.Promote
 import XMonad.Actions.CycleWS -- to move windows
 import XMonad.Actions.CycleWindows
 import qualified XMonad.Actions.CycleWS as CWs -- girar las ventanas en la misma pantalla
-
+------------------------------------------------------------------------------------------
 -- Layouts
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Grid
@@ -57,25 +61,25 @@ import XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, MIRROR, NOBORDERS))
 
 
-
-
-myTerminal           = "alacritty" :: String     -- Terminal por defecto
-myModMask            = mod4Mask    :: KeyMask    -- Tecla master (windows)
-myBorderWidth        = 2           :: Dimension  -- Tamaño del borde de las ventanas
-myNormalBorderColor  = "#3e4564"   :: String     -- Color de la ventana desenfocada
-myFocusedBorderColor = "#bfc9f4"   :: String     -- Color de la ventana activa
+------------------------------------------------------------------------------------------
+myTerminal           = "alacritty" :: String     -- Terminal
+myModMask            = mod4Mask    :: KeyMask    -- leader key (windows)
+myBorderWidth        = 2           :: Dimension  -- Border size
+myNormalBorderColor  = "#3e4564"   :: String     -- Border color of unfocus window
+myFocusedBorderColor = "#bfc9f4"   :: String     -- Border color of focus window
 myFocusFollowsMouse  = True        :: Bool
 myClickJustFocuses   = False       :: Bool
 
+-----------------------------------------------------------------------------------------
+-- Start Up
 myStartupHook :: X ()
 myStartupHook = do
-    spawn "~/.fehbg"
+    spawn "~/.fehbg" -- Set background
     spawn "killall picom;sleep 2; picom --experimental-backends"
-    setDefaultCursor xC_left_ptr -- Use my favorite cursor theme
+    setDefaultCursor xC_left_ptr -- Set cursor theme
 
---
--- Rule windows
---
+-----------------------------------------------------------------------------------------
+-- Rule of the windows
 myManageHook = composeOne [
     transience
     , isDialog  -?> doCenterFloat
@@ -91,13 +95,14 @@ myManageHook = composeOne [
     , isFullscreen --> doFullFloat
     ]
 
--- Define the names of workpaces
---
+----------------------------------------------------------------------------------------
+-- WORKSPACE
 
-
+-- Define my workspace in this case 5
 myWorkSpaces :: [String]
 myWorkSpaces = map show [1..5 :: Int]
 
+-- Icons for identify the workspaces
 currentWorkspace :: String -> String
 currentWorkspace _ = "<fn=1>\xF0BAF</fn>" -- pacman
 
@@ -105,23 +110,22 @@ occupiedWorkspace :: String -> String
 occupiedWorkspace _ = "<fn=1>\xF02A0</fn>" -- ghost
 
 otherWorkspace :: String -> String
-otherWorkspace _ = "<fn=1>\xF09F5</fn>"
+otherWorkspace _ = "<fn=1>\xF02A0</fn>" -- ghost, too
 
-
-
---
 -- this is to show the number of windows in each workspace.
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
--- Personalized size of space between the windows.
---
+----------------------------------------------------------------------------------------
+-- LAYOUTS.
+-- define the size of gaps
 mySpacing = spacingRaw False             -- False=Apply even when single window
                        (Border 5 5 5 5)  -- Sreen border size top bot right lefth
                        True              -- Enable sreen boder
                        (Border 5 5 5 5)  -- Window Border size
                        True              -- Enable window borders
 
+-- My Layouts
 myLayoutHook = avoidStruts $ tall ||| grid ||| full
     where
         tall =  renamed [Replace "\xfa6d "] --舘
@@ -140,15 +144,17 @@ myLayoutHook = avoidStruts $ tall ||| grid ||| full
         delta = 3/100
         ratio = 1/2
 
+---------------------------------------------------------------------------------------
+-- XMOBAR
+--
 myLogHook one two = xmobarPP {
-    ppOutput = \x -> hPutStrLn one x
-                  >> hPutStrLn two x
+    ppOutput = \x -> hPutStrLn one x >> hPutStrLn two x
 
    -- , ppCurrent         = xmobarColor "#050608,#bfc9f4" "" . wrap (xmobarColor"#050608,#bfc9f4" "" "\xe0b0")(xmobarColor"#bfc9f4" "" "\xe0b0") . currentWorkspace
-    , ppCurrent         = xmobarColor "#fbe32f" "" . currentWorkspace
-    , ppVisible         = xmobarColor "#7f9ebd" "" . otherWorkspace -- . wrap ("")("") -- . \s -> " \xf878 "
+    , ppCurrent         = xmobarColor "#ffc857" "" . currentWorkspace
+    , ppVisible         = xmobarColor "#ff1767" "" . otherWorkspace -- . wrap ("")("") -- . \s -> " \xf878 "
     , ppHiddenNoWindows = xmobarColor "#223045" "" . occupiedWorkspace
-    , ppHidden          = xmobarColor "#5b92fa" "" . occupiedWorkspace
+    , ppHidden          = xmobarColor "#29c1dc" "" . occupiedWorkspace
     , ppTitle           = xmobarColor "#bfc9f4" "" . shorten 55
     --, ppLayout          = xmobarColor "#29c1dc" ""
     , ppSep             = "<fc=#5d647e> · </fc>"
@@ -159,9 +165,10 @@ myLogHook one two = xmobarPP {
     , ppOrder           = \(ws :_:t:ex) -> [ws]++ex++[t] -- don't show the Layouts state
 
 }
-----------------------------------------------------------
---                        Keybinding                    --
-----------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+-- KEYBOARD
+--
 myKeys = [
     -- : Xmonad
 
@@ -215,16 +222,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
                                            >> windows W.shiftMaster))
     ]
 
-
-
-
-
---myLayoutHook = smartBorders $ noBorders Full ||| tiled ||| Mirror tiled ||| mouseResizableTile
---    where
---        tiled = smartSpacing 5 $ Tall nmaster delta ratio
---        nmaster = 16
---        ratio = 1/2
---        delta = 3/100
+-------------------------------------------------------------------------------------------------
 
 main :: IO ()
 main = do
@@ -241,7 +239,7 @@ main = do
     , clickJustFocuses      = myClickJustFocuses
     , mouseBindings         = myMouseBindings
     , layoutHook            = myLayoutHook
-    , workspaces            = myWorkSpaces
+    , workspaces            = withScreens 2 myWorkSpaces
     , startupHook           = myStartupHook
     , manageHook            = myManageHook <+> manageDocks
     , logHook               = (dynamicLogWithPP $ myLogHook laptopBar extrMonitorBar) >> updatePointer(0.5,0.5)(0.5, 0.5)
