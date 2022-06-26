@@ -1,11 +1,15 @@
 Config {
     --
+    -- 0 primary font for font ;p
+    -- 1 font for icons
+    -- 2 font for icons
 	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=12:antialias=true:hinting=true"
-   , additionalFonts = ["xft:Material Design Icons:pixelsize=14"
-                       ,"xft:Material Design Icons:pixelsize=15"]
-    , bgColor = "#010409" --050608
-	, fgColor = "#dde684" -- Color just for number window
-	, position = TopW C 100 -- TopSize L 100 1
+    , additionalFonts = ["xft:Material Design Icons,"
+                        ,"xft:Font Awesome 6 Free Solid:pixelsize=12"]
+
+    , bgColor = "#010409"
+	, fgColor = "#dde684" -- I just only use this color for numbers of windows on my workspace
+	, position = TopW C 100
     --, textOffset = -50
     --, textOffsets = [20,21,20,21]
     --, iconOffset = -1
@@ -22,78 +26,85 @@ Config {
     , persistent = False
 
     , commands = [
-         Run MultiCpu [
-        "--template" , "<total>%"
-        , "--Low"    , "50"
-        , "--High"   , "90"
+
+        Run MultiCpu [
+        "--template" ,"<total>%"
+        ,"--Low"    ,"50"
+        ,"--High"   ,"90"
         ] 10
 
         ,Run MultiCoreTemp [
-         "--template" , "<maxpc>°C"
-        ,"--Low"      , "60"
-        , "--High"    , "90"
+         "--template" ,"<maxpc>°C"
+        ,"--Low"      ,"60"
+        , "--High"    ,"90"
         ] 10
 
         ,Run Memory [
-         "--template" , "<usedratio>%"
-        ,"--Low"      , "20"
-        ,"--High"     , "95"
+         "--template" ,"<usedratio>%"
+        ,"--Low"      ,"20"
+        ,"--High"     ,"95"
         ] 10
 
 		,Run Battery [
-         "--template" , "<acstatus>"
-        ,"--Low"      , "10"
-        ,"--High"     , "90"
+         "--template" ,"<acstatus>"
+        ,"--Low"      ,"10"
+        ,"--High"     ,"90"
       --,"-p" , "5"
         ,"--"
-        ,"-O", "<fc=#ff9801><fn=2>󰫃</fn> </fc><left>%" -- Charging
-        ,"-o", "<fc=#ff9801><fn=2>󰫇</fn> </fc><left>%" -- State of charge
-        ,"-i", "<fc=#ff9801><fn=2>󰫈</fn> </fc><left>%"  -- Full charging
-        ,"-A", "10"
-        ,"-a", "notify-send 'Sin carga'"
+
+        ,"-o" ,""
+        ,"--lows",    "<fc=#eb5254><fn=2></fn> </fc><left>%"
+        ,"--mediums", "<fc=#ffc857><fn=2></fn> </fc><left>%"
+        ,"--highs",   "<fc=#4de675><fn=2></fn> </fc><left>%"
+
+        ,"-O" ,"<fc=#ff9801><fn=1></fn> </fc><left>%" -- AC "on" status
+        ,"-i" ,"<fc=#4de675><fn=2></fn> </fc><left>%"  -- Charged status
+
+        ,"-a" ,"notify-send -u critical 'Battery running out!!'"
+        ,"-A" ,"20"
         ] 10
 
         ,Run DynNetwork [
-         "--template" , "<dev> <rx> <tx>"
+         "--template" ,"<dev> <rx> <tx>"
         ,"--"
         ,"--devices","wlan0,wlan1"
         ] 10
 
         ,Run Alsa "default" "Master" [
-         "--template" , "<status><volume>%"
+         "--template" ,"<status><volume>%"
         ,"--"
-        ,"-c", "#06c383"
-        ,"-C", "#06c383"
-        ,"-O", ""
-        ,"-h", " "
-        ,"-m", " "
-        ,"-l", " "
-        ,"-o", " "
-          ]
+        ,"-c" ,"#a3ef0c"
+        ,"-C" ,"#a3ef0c"
+        ,"-O" ,""
+        ,"-h" ,"<fn=2></fn> "
+        ,"-m" ,"<fn=1>󰖀</fn> "
+        ,"-l" ,"<fn=1>󰕿</fn> "
+        ,"-o" ,"<fn=2></fn> "
+        ]
 
         ,Run Brightness [
-        "-t", "<percent>%"
+        "-t" ,"<percent>%"
         ,"--"
         ,"-D"
         ,"/sys/class/backlight/intel_backlight"
         ] 60
 
-        ,Run Date "%d %b %Y · %H:%M" "date" 600
-        --, Run StdinReader
+        ,Run Date "%d %b %Y  %H:%M" "date" 600
+
         , Run UnsafeStdinReader
     ]
 
 	, sepChar = "%"
     , alignSep = "}{"
-	, template = "<fc=#00afff,#131c2a>  </fc><fc=#131c2a,#010409></fc>%UnsafeStdinReader%}{\
-	\<fc=#131c2a> | </fc><fc=#c2ff5f><fn=2>󰍛</fn> </fc><fc=#bfc9f4>%multicpu%</fc>\
-	\<fc=#131c2a> | </fc><fc=#29c1dc><fn=2>󰈐</fn> </fc><fc=#bfc9f4>%multicoretemp%</fc>\
-    \<fc=#131c2a> | </fc><fc=#f1c40f><fn=2>󰓌</fn> </fc><fc=#bfc9f4>%memory%</fc>\
-	\<fc=#131c2a> | </fc><fc=#00afff><fn=2>󰒪</fn> </fc><fc=#bfc9f4>%dynnetwork%</fc>\
-	\<fc=#131c2a> | </fc><fc=#bfc9f4>%battery%</fc>\
-	\<fc=#131c2a> | </fc><fc=#bfc9f4>%alsa:default:Master%</fc>\
-    \<fc=#131c2a> | </fc><fc=#b170f3><fn=2>󰃠</fn> </fc><fc=#bfc9f4>%bright%</fc>\
-	\<fc=#131c2a> | </fc><fc=#eb5254><fn=2>󰃰</fn> </fc><fc=#bfc9f4>%date% hrs </fc>"
+	, template = " %UnsafeStdinReader%}{\
+	\<fc=#c2ff5f> | <fn=2></fn> </fc><fc=#bfc9f4>%multicpu%</fc>\
+	\<fc=#29c1dc> | <fn=1>󰈐</fn> </fc><fc=#bfc9f4>%multicoretemp%</fc>\
+    \<fc=#f1c40f> | <fn=2></fn> </fc><fc=#bfc9f4>%memory%</fc>\
+	\<fc=#131c2a> | </fc><fc=#00afff><fn=2></fn> </fc><fc=#bfc9f4>%dynnetwork%</fc>\
+	\<fc=#4c5067> | </fc><fc=#bfc9f4>%battery%</fc>\
+	\<fc=#4c5067> | </fc><fc=#bfc9f4>%alsa:default:Master%</fc>\
+    \<fc=#4c5067> | </fc><fc=#b170f3><fn=1>󰃠</fn> </fc><fc=#bfc9f4>%bright%</fc>\
+	\<fc=#4c5067> | </fc><fc=#eb5254><fn=1>󰃰</fn> </fc><fc=#bfc9f4>%date% hrs </fc>"
 
 }
 -- vim:ft=haskell
