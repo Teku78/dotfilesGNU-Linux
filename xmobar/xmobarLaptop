@@ -4,11 +4,11 @@ Config {
     -- 1 font for icons
     -- 2 font for icons
 	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=12:antialias=true:hinting=true"
-    , additionalFonts = ["xft:Material Design Icons,"
+        , additionalFonts = ["xft:Material Design Icons:pixelsize=14"
                         ,"xft:Font Awesome 6 Free Solid:pixelsize=12"]
 
     , bgColor = "#010409"
-	, fgColor = "#dde684" -- I just only use this color for numbers of windows on my workspace
+	, fgColor = "#546387" -- I just only use this color for numbers of windows on my workspace
 	, position = TopW C 100
     --, textOffset = -50
     --, textOffsets = [20,21,20,21]
@@ -53,12 +53,12 @@ Config {
         ,"--"
 
         ,"-o" ,""
-        ,"--lows",    "<fc=#eb5254><fn=2></fn> </fc><left>%"
+        ,"--lows",    "<fc=#eb5254><fn=2></fn> </fc><left>%"
         ,"--mediums", "<fc=#ffc857><fn=2></fn> </fc><left>%"
-        ,"--highs",   "<fc=#4de675><fn=2></fn> </fc><left>%"
+        ,"--highs",   "<fc=#b9f27c><fn=2></fn> </fc><left>%"
 
-        ,"-O" ,"<fc=#ff9801><fn=1></fn> </fc><left>%" -- AC "on" status
-        ,"-i" ,"<fc=#4de675><fn=2></fn> </fc><left>%"  -- Charged status
+        ,"-O" ,"<fc=#ff9801><fn=2></fn> </fc><left>%" -- AC "on" status
+        ,"-i" ,"<fc=#b9f27c><fn=2></fn> </fc><left>%"  -- Charged status
 
         ,"-a" ,"notify-send -u critical 'Battery running out!!'"
         ,"-A" ,"20"
@@ -73,13 +73,13 @@ Config {
         ,Run Alsa "default" "Master" [
          "--template" ,"<status><volume>%"
         ,"--"
-        ,"-c" ,"#a3ef0c"
-        ,"-C" ,"#a3ef0c"
+        ,"-c" ,"#bb9af7"
+        ,"-C" ,"#bb9af7"
         ,"-O" ,""
         ,"-h" ,"<fn=2></fn> "
-        ,"-m" ,"<fn=1>󰖀</fn> "
-        ,"-l" ,"<fn=1>󰕿</fn> "
-        ,"-o" ,"<fn=2></fn> "
+        ,"-m" ,"<fn=1></fn> "
+        ,"-l" ,"<fn=1></fn> "
+        ,"-o" ,"<fn=2></fn> "
         ]
 
         ,Run Brightness [
@@ -97,14 +97,14 @@ Config {
 	, sepChar = "%"
     , alignSep = "}{"
 	, template = " %UnsafeStdinReader%}{\
-	\<fc=#c2ff5f> | <fn=2></fn> </fc><fc=#bfc9f4>%multicpu%</fc>\
-	\<fc=#29c1dc> | <fn=1>󰈐</fn> </fc><fc=#bfc9f4>%multicoretemp%</fc>\
-    \<fc=#f1c40f> | <fn=2></fn> </fc><fc=#bfc9f4>%memory%</fc>\
-	\<fc=#131c2a> | </fc><fc=#00afff><fn=2></fn> </fc><fc=#bfc9f4>%dynnetwork%</fc>\
-	\<fc=#4c5067> | </fc><fc=#bfc9f4>%battery%</fc>\
-	\<fc=#4c5067> | </fc><fc=#bfc9f4>%alsa:default:Master%</fc>\
-    \<fc=#4c5067> | </fc><fc=#b170f3><fn=1>󰃠</fn> </fc><fc=#bfc9f4>%bright%</fc>\
-	\<fc=#4c5067> | </fc><fc=#eb5254><fn=1>󰃰</fn> </fc><fc=#bfc9f4>%date% hrs </fc>"
+	\<fc=#4c5067> | </fc><fc=#b9f27c><fn=2></fn> </fc><fc=#98a3cc>%multicpu%</fc>\
+	\<fc=#4c5067> | </fc><fc=#ff9e64><fn=1>󰈐</fn> </fc><fc=#98a3cc>%multicoretemp%</fc>\
+    \<fc=#4c5067> | </fc><fc=#0db9d7><fn=2></fn> </fc><fc=#98a3cc>%memory%</fc>\
+	\<fc=#4c5067> | </fc><fc=#ff7a93><fn=2></fn> </fc><fc=#98a3cc>%dynnetwork%</fc>\
+	\<fc=#4c5067> | </fc><fc=#98a3cc>%battery%</fc>\
+	\<fc=#4c5067> | </fc><fc=#98a3cc>%alsa:default:Master%</fc>\
+    \<fc=#4c5067> | </fc><fc=#7da6ff><fn=1>󰃠</fn> </fc><fc=#98a3cc>%bright%</fc>\
+    \<fc=#4c5067> | </fc><fc=#ffa0a0><fn=1>󰃰</fn> </fc><fc=#98a3cc>%date% hrs </fc>"
 
 }
 -- vim:ft=haskell

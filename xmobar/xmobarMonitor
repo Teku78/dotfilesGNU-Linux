@@ -1,29 +1,38 @@
 Config {
-	-- Aparence
-	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=13:antialias=true:hinting=true"
-    , bgColor = "#050608"
-	--, fgColor = "#0FB9FF"
-	, position = TopW C 100
-	--, alpha = 255
+    --
+	font = "xft:Roboto Mono Nerd Font:weight=bold:pixelsize=12:antialias=true:hinting=true"
+   , additionalFonts = ["xft:Material Design Icons:pixelsize=15"
+                       ,"xft:Material Design Icons:pixelsize=15"]
+    , bgColor = "#010409"
+	, fgColor = "#546387"
+	, position = TopW C 100 -- TopSize L 100 1
+    --, textOffset = -50
+    --, textOffsets = [20,21,20,21]
+    --, iconOffset = -1
+	--, alpha = 150
 	, border = BottomB
-	, borderColor = "#1A1e24"
+	, borderColor = "#131c2a"
 
-	-- Comportamiento general
-	, lowerOnStart = False
-	, hideOnStart = False
-	, allDesktops = True
-	, overrideRedirect = False
-	, pickBroadest = False
-	, persistent = True
+    --
+    , lowerOnStart = True
+    , hideOnStart = False
+    , allDesktops = True
+    , overrideRedirect = True
+    , pickBroadest = False
+    , persistent = False
 
-	, commands = [
-		 Run Date     "%d %b %Y | %H:%M" "date" 600
-		, Run UnsafeStdinReader
-	]
+    , commands = [
+
+
+        Run Date "%d %b %Y · %H:%M" "date" 600
+        --, Run StdinReader
+        , Run UnsafeStdinReader
+    ]
+
 	, sepChar = "%"
     , alignSep = "}{"
-	, template = "<fc=#C0CAF5,#363948>   </fc><fc=#363948,#050608></fc>%UnsafeStdinReader% }{ \
-	\<fc=#363948>  </fc><fc=#5B92FA> </fc><fc=#C0CAF5>%date%·hrs </fc>"
-}
+	, template = "%UnsafeStdinReader%}{\
+	\<fc=#4c5067> | </fc><fc=#ff7a93><fn=2>󰃰</fn> </fc><fc=#98a3cc>%date% hrs </fc>"
 
+}
 -- vim:ft=haskell

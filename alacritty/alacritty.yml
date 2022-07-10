@@ -13,7 +13,7 @@ window:
     class:
       instance: Alacritty
       general: Alacritty
-      opacity: 1.0
+        #      opacity: 0.97
 
         # dimensions:
         # columns: 60
@@ -25,32 +25,32 @@ window:
 
 tabspace: 4
 
-  #background.opacity: 0.97
+ #background.opacity: 0.97
 
 selection:
-    save_to_clipboard: false
+    save_to_clipboard: true
 
 shell:
     program: /usr/bin/zsh
 
 font:
   bold:
-    family: Fira Code Nerd Font
+    family: FiraCode
     style:  Bold
 
   italic:
-    family: Fira Code Nerd Font
+    family: VictorMono
     style:  Italic
 
   normal:
-    family: Fira Code Nerd Font
+    family: FiraCode
     style:  Regular
 
   bold_italic:
-    family: Fira Code Nerd Font
+    family: VictorMono
     style: Bold Italic
 
-  size: 13.0
+  size: 14.0
 
   offset:
     x: 0
@@ -59,17 +59,17 @@ font:
   glyph_offset:
     x: 0
     y: 0
+
 live_config_reload: true
 draw_bold_text_with_bright_colors: true
 
-seletion:
-    save_to_clipboard: true
 cursor:
-    style: 'Underline'
+    style: 'Block'
+
 colors:
   primary:
-    background: '#050608'
-    foreground: '#C0CAF5'
+    background: '#010409'
+    foreground: '#bfc9f4'
 
   cursor:
     text:   '#050608'
@@ -79,23 +79,23 @@ colors:
   normal:
     black:   '#000000'
     red:     '#F43e5c'
-    green:   '#80C858'
-    yellow:  '#F2CE00'
-    blue:    '#0068ff'
-    magenta: '#9b59b6'
-    cyan:    '#00a9a5'
-    white:   '#C0CAF5'
+    green:   '#00ff6f'
+    yellow:  '#Fbe32f'
+    blue:    '#00afff'
+    magenta: '#b170f3'
+    cyan:    '#00fdd2'
+    white:   '#bfc9f4'
 
   # Bright colors
   bright:
     black:   '#404767'
-    red:     '#f20051'
-    green:   '#c2ff5f'
-    yellow:  '#F2CE00'
-    blue:    '#2e8cff'
-    magenta: '#9500f2'
-    cyan:    '#00f295'
-    white:   '#C0CAF5'
+    red:     '#ff1767'
+    green:   '#00ff6f'
+    yellow:  '#Fbe32f'
+    blue:    '#00afff'
+    magenta: '#b170f3'
+    cyan:    '#00fdd2'
+    white:   '#bfc9f4'
 
 
 
@@ -104,5 +104,5 @@ key_bindings:
   - { key: Down, mods: Shift, action: ScrollPageDown, mode: ~Alt           }
   - { key: Home,     mods: Shift, action: ScrollToTop,    mode: ~Alt       }
   - { key: End,      mods: Shift, action: ScrollToBottom, mode: ~Alt       }
-  # Para hacer fullscreen es necesario tener instalado wmctrl
+  # Toggle full screen you are need install wmctrl
   #  - { key: F11, command: { program: "wmctrl", args: ["-r", ":ACTIVE:", "-b", "toggle,fullscreen" ] } }
