@@ -1,0 +1,110 @@
+
+#
+# Set environment variables
+env:
+    TERM: xterm-256color
+
+# Windows settings
+window:
+    padding:
+        x: 5
+        y: 5
+
+    class:
+      instance: Alacritty
+      general: Alacritty
+
+        # dimensions:
+        # columns: 60
+        # lines: 100
+
+        # position:
+        # x: 50
+        # y: 60
+
+tabspace: 4
+
+background.opacity: 0.97
+
+selection:
+    save_to_clipboard: true
+
+shell:
+    program: /usr/bin/zsh
+
+font:
+  bold:
+    family: Blex Mono Nerd Font
+    style:  Bold
+
+  italic:
+    family: Blex Mono Nerd Font
+    style:  Italic
+
+  normal:
+    family: Blex Mono Nerd Font
+    style:  Regular
+
+  bold_italic:
+    family: Blex Mono Nerd Font
+    style: Bold Italic
+
+  size: 14.0
+
+  offset:
+    x: 0
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+
+live_config_reload: true
+draw_bold_text_with_bright_colors: true
+
+cursor:
+    style: 'Block'
+
+colors:
+  primary:
+    background: '#05090f'
+    foreground: '#C0CAF5'
+
+  cursor:
+    text:   '#05090f'
+    cursor: '#EEFFFF'
+
+  # Normal colors
+  normal:
+    black:   '#000000'
+    red:     '#F43e5c'
+    green:   '#00ff6f'
+    yellow:  '#Fbe32f'
+    blue:    '#00afff'
+    magenta: '#b170f3'
+    cyan:    '#00fdd2'
+    white:   '#bfc9f4'
+
+  # Bright colors
+  bright:
+    black:   '#404767'
+    red:     '#ff1767'
+    green:   '#aff5b4'
+    yellow:  '#Fbe32f'
+    blue:    '#74baff'
+    magenta: '#a47de9'
+    cyan:    '#98d1ce'
+    white:   '#ffffff'
+
+
+
+key_bindings:
+  - { key: Up,   mods: Shift, action: ScrollPageUp,   mode: ~Alt           }
+  - { key: Down, mods: Shift, action: ScrollPageDown, mode: ~Alt           }
+  - { key: Home,     mods: Shift, action: ScrollToTop,    mode: ~Alt       }
+  - { key: End,      mods: Shift, action: ScrollToBottom, mode: ~Alt       }
+  # Toggle full screen you are need install wmctrl
+  #  - { key: F11, command: { program: "wmctrl", args: ["-r", ":ACTIVE:", "-b", "toggle,fullscreen" ] } }
+
+
+
