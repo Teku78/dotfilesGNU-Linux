@@ -2,7 +2,7 @@ configuration {
     modi: "drun";
     font: "BlexMono Nerd Font 12";
     show-icons: true;
-    /*icon-theme: "Papirus-dark";*/
+    icon-theme: "ePapirus-dark";
     display-drun: "X";
     drun-display-format: "{name}";
     sidebar-mode: false;
@@ -11,7 +11,7 @@ configuration {
 @theme "/dev/null"
 
 * {
-	bg: #010409;
+	bg: #05090f;
 	fg: #C0CAF5;
 /*	accent: #f5758c; */
 	button:#10131a;

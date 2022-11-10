@@ -1,48 +1,22 @@
 #!/usr/bin/bash
 # Install and update my dotfiles with git and github
 
+# Neovim,Media,Audio,Tweaks,Mount usb and disks,Common Utilities,Sistem
+packages="xsel python-noevim xclip
 
-# it's better with prety colors, right...
-resetColor="\e[0m"
-fgRed="\033[0;32m"
-fgYellow="\033[0;33m"
+xmonad xmonad-contrib
 
-GITHUB_REPO="https://github.com/tekuHZ/dotfiles.git"
-DIR="$HOME/my_dots"
+vlc feh
 
-download_dotfiles() {
-    echo  -e "Creating a temporal directory"
-    mkdir -p "${DIR}"
+pipewire pipewire-pulse
 
-    echo  -e "Download dotfiles to ${DIR}"
-    git clone ${GITHUB_REPO} ${DIR}
-}
+lxappearance
 
-link_dotfiles() {
-    for dots in "$HOME/dotfiles"
-    do
-        if [ -d $dots ]
-        then
-            echo " $dots "
-        else
-            echo " no Exsiste"
+gvfs gvfs-mtp ntfs-3g
 
-        fi
+alacritty rofi zsh firefox dunst
+thunar xf86-video-intel intel-ucode xorg xorg-server
 
-    done
-
-
-}
-
-
-
-
-install_dots() {
-
-    #download_dotfiles
-    link_dotfiles
-}
-
-install_dots
+net-tools iw"
 
 

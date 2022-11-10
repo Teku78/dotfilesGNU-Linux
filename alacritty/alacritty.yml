@@ -7,8 +7,8 @@ env:
 # Windows settings
 window:
     padding:
-        x: 5
-        y: 5
+        x: 4
+        y: 4
 
     class:
       instance: Alacritty
@@ -88,12 +88,12 @@ colors:
   # Bright colors
   bright:
     black:   '#404767'
-    red:     '#ff1767'
-    green:   '#aff5b4'
+    red:     '#f87171'
+    green:   '#39d5a5'
     yellow:  '#Fbe32f'
     blue:    '#74baff'
-    magenta: '#a47de9'
-    cyan:    '#98d1ce'
+    magenta: '#b87fe1'
+    cyan:    '#7EDDDE'
     white:   '#ffffff'
 
 

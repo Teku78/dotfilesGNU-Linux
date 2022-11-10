@@ -70,16 +70,17 @@ myFocusedBorderColor = "#bfc9f4"   :: String     -- Border color of focus window
 myFocusFollowsMouse  = True        :: Bool
 myClickJustFocuses   = False       :: Bool
 
------------------------------------------------------------------------------------------
--- Start Up
+-- Start Up --------------------------------------------------------------------------------------
 myStartupHook :: X ()
 myStartupHook = do
-    spawn "~/.fehbg" -- Set background
-    spawn "killall picom;sleep 2; picom --experimental-backends"
-    setDefaultCursor xC_left_ptr -- Set cursor theme
+	
+	spawn "xrandr --output HDMI1 --primary --auto --output eDP1 --auto --below HDMI1"
+	--spawn "xmonad --restart"
+	spawn "~/.fehbg" -- Set background
+    -- spawn "killall picom;sleep 2; picom --experimental-backends"
+	setDefaultCursor xC_left_ptr -- Set cursor theme
 
------------------------------------------------------------------------------------------
--- Rule of the windows
+-- Rule of the windows --------------------------------------------------------------------------- 
 myManageHook = composeOne [
     transience
     , isDialog  -?> doCenterFloat
@@ -100,8 +101,8 @@ myManageHook = composeOne [
 
 -- Define my workspace in this case 5
 myWorkSpaces :: [String]
-myWorkSpaces = map show [1..5 :: Int]
-
+--myWorkSpaces = map show [1..5 :: Int]
+myWorkSpaces = ["1", "2"]
 -- Icons for identify the workspaces
 currentWorkspace :: String -> String
 currentWorkspace _ = "<fn=1>\xF0BAF</fn>" -- pacman
@@ -127,7 +128,8 @@ mySpacing = spacingRaw False             -- False=Apply even when single window
 
 -- My Layouts
 myLayoutHook = avoidStruts $ tall ||| grid ||| full
-    where
+	where
+		
         tall =  renamed [Replace "\xfa6d "] --舘
                  $ mySpacing
                  $ Tall nmaster delta ratio
@@ -144,9 +146,7 @@ myLayoutHook = avoidStruts $ tall ||| grid ||| full
         delta = 3/100
         ratio = 1/2
 
----------------------------------------------------------------------------------------
--- XMOBAR
---
+-- Xmobar ----------------------------------------------------------------------------------------
 myLogHook one two = xmobarPP {
     ppOutput = \x -> hPutStrLn one x >> hPutStrLn two x
 
@@ -166,15 +166,14 @@ myLogHook one two = xmobarPP {
 
 }
 
----------------------------------------------------------------------------------------
--- KEYBOARD
---
+-- Keybinding -------------------------------------------------------------------------------------
 myKeys = [
-    -- : Xmonad
+	
+	-- : Xmonad
+    ("M-q"  , kill)									-- Close current window
+	, ("M-r"    , spawn "xmonad --restart")			-- Restart xmonad 
 
-    ("M-r"    , spawn "xmonad --restart")           -- Restart xmonad
-    , ("M-q"  , kill)                               -- Close current window
-    , ("M-<Tab>"  , CWs.nextScreen)                 -- Move between monitor
+	, ("M-<Tab>"  , CWs.nextScreen)                 -- Move between monitor
 --    , ("M-l", CWs.prevScreen)                     -- mover el cursor de regreso a otro monitor
     , ("M-S-l", CWs.shiftToNext)                    -- Move the focused window to the next workspace
     , ("M-S-h", CWs.shiftToPrev)
@@ -190,10 +189,11 @@ myKeys = [
     , ("M-n"  , promote)                            -- Move focused window to master.
     , ("M-a", sendMessage MirrorExpand)
     , ("M-u", sendMessage $ JumpToLayout "full")
+
     -- Programs
     , ("M-m", sendMessage ShrinkSlave)
-    , ("M-S-p", spawn
-       "flameshot screen -n 0 -d 1000 -p ~/Pictures/Screenshot/")       -- Take a screenshot of the current window / install flameshot
+    , ("M-S-p", spawn "flameshot screen -n 0 -d 1000 -p ~/Pictures/Screenshot/")       -- Take a screenshot of the current window / install flameshot
+	, ("M-s", spawn "flameshot gui")
     , ("M-p"  , spawn "rofi -show drun")            -- Lauch then menu programs / install rofi
     , ("M-<Return>", spawn myTerminal)              -- Lauch terminal
     -- , ("M-S-s", spawn "firefox --private-window")   -- ;p
@@ -222,7 +222,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
                                            >> windows W.shiftMaster))
     ]
 
--------------------------------------------------------------------------------------------------
+-- Main ------------------------------------------------------------------------------------------
 
 main :: IO ()
 main = do
