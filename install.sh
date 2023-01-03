@@ -1,22 +1,48 @@
 #!/usr/bin/bash
-# Install and update my dotfiles with git and github
 
-# Neovim,Media,Audio,Tweaks,Mount usb and disks,Common Utilities,Sistem
-packages="xsel python-noevim xclip
+# This my script to install and set up my desktop
 
-xmonad xmonad-contrib
+function install_pkg () {
+	sudo pacman -Syu --noconfirm
+	sudo pacman -S --noconfirm $(cat $HOME/.dotfiles/pkglist | grep -v "^#")
+}
 
-vlc feh
+function install_yay () {
+	if ! command -v yay $> /dev/null
+	then 
+		git clone https://aur.archlinux.org/yay.git $HOME/yay
+		(cd $HOME/yay/ && makepkg -si --noconfirm --needed PKGBUILD)
+	else
+		echo -e "yay is already installed"
+		sleep 1; clear
+		fi
+}
 
-pipewire pipewire-pulse
+function link_files () {
+# link all configurations
+	ln -sf $HOME/.dotfiles/alacrity $HOME/.config/
+	ln -sf $HOME/.dotfiles/nvim $HOME/.config/
+	ln -sf $HOME/.dotfiles/rofi $HOME/.config/
+	ln -sf $HOME/.dotfiles/tmux $HOME/.config/
+	ln -sf $HOME/.dotfiles/xmonad $HOME/.config/
 
-lxappearance
+	ln -sf $HOME/.dotfiles/Xresources $HOME/.Xresources
+	ln -sf $HOME/.dotfiles/zsh/zshrc $HOME/.zshrc
 
-gvfs gvfs-mtp ntfs-3g
+}
 
-alacritty rofi zsh firefox dunst
-thunar xf86-video-intel intel-ucode xorg xorg-server
+function clean_up {
+	# This when everything finish
+	#
+	echo " Clean package cache..."
+	sudo pacman -Sc --noconfirm &> /dev/null
+	echo " Remove unused packages..."
+	sudo pacman -Rns $(pacman -Qtdq) --noconfirm &> /dev/null
+	echo " Clean cache home..."
+	sudo rm -rf $HOME/.cache/* 
 
-net-tools iw"
+}
 
-
+#install_pkg
+#install_yay
+#clean_up
