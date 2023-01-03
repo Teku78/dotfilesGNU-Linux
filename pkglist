@@ -1,0 +1,50 @@
+# package list for my Archlinux
+
+# Video intel
+xf86-video-intel
+xorg-server
+xorg-xinit
+xterm
+xorg-xrandr
+vulkan-intel
+mesa-amber
+
+# Audio with Pipewire
+pipewire
+pipewire-jack
+pipewire-media-session
+pipewire-pulse
+rtkit
+pavucontrol
+
+# Enviroment 
+xmonad
+xmonad-contrib
+
+git
+firefox
+vlc
+feh
+alacritty
+htop
+zsh
+net-tools
+rofi
+dunst
+terminus-font
+
+tmux
+xsel
+xclip
+python-neovim
+
+gvfs
+gvfs-mtp
+ntfs-3g
+
+pcmanfm-gtk3
+tumbler
+ffmpegthumbnailer
+libopenraw
+poppler-glib
+lxappearance
