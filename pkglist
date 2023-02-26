@@ -1,6 +1,5 @@
 # package list for my Archlinux
-
-# Video intel
+# Video (intel)
 xf86-video-intel
 xorg-server
 xorg-xinit
@@ -8,7 +7,6 @@ xterm
 xorg-xrandr
 vulkan-intel
 mesa-amber
-
 # Audio with Pipewire
 pipewire
 pipewire-jack
@@ -16,11 +14,10 @@ pipewire-media-session
 pipewire-pulse
 rtkit
 pavucontrol
-
 # Enviroment 
 xmonad
 xmonad-contrib
-
+# Utilies
 git
 firefox
 vlc
@@ -32,16 +29,16 @@ net-tools
 rofi
 dunst
 terminus-font
-
+# Neovim
 tmux
 xsel
 xclip
 python-neovim
-
+# Storage
 gvfs
 gvfs-mtp
 ntfs-3g
-
+# Files
 pcmanfm-gtk3
 tumbler
 ffmpegthumbnailer
