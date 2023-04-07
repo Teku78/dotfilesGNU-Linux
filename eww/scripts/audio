@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+printf $(pactl list sinks | grep -i front-left: | awk '{print ($5+0)}')
+

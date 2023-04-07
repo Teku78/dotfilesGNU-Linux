@@ -1,0 +1,44 @@
+/** Colors **/
+$black: #0d1117;
+$white: #A6CDFF;
+$white2: #171b22;
+* {
+	all: unset;
+	font-family: Blex Mono Nerd Font;
+}
+
+.main_widget_bar {
+	background: $black;
+}
+.box_clock_module {
+	color: #070c14;
+	background: #A6CDFF;
+	border-radius: 12px 0px 0px 12px;
+}
+.box_memory {
+	color: #A6CDFF;
+	background: #3a44fa;
+}
+/** VOLUME **/
+/** color of the bar **/
+tooltip > volume {
+	background-color: $black;
+	border-radius: 10px;
+	font-size:10px;
+
+}
+.volbar trough {
+	background-color: $white2;
+	min-height: 10px;
+	border-radius: 10px;
+	margin-right:10px;
+}
+/** color of the bar inside the bar **/
+.volbar highlight {
+	background-color: $white;
+	border-radius: 10px;
+}
+
+	
+
+/**vim:ft=css**/

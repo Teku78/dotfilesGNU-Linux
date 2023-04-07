@@ -1,0 +1,12 @@
+
+set default-bg "#0b1421" #zathura background
+#set default-fg "#dddddd"
+
+set recolor-darkcolor "#A6CDff" # Change font color 
+set recolor-lightcolor "#070c14" # Change sheet color
+#set render-loading true
+#$set render-loading-fg "#282a36"
+#set render-loading-bg "#282a36"
+
+set adjut-open width
+set recolor true

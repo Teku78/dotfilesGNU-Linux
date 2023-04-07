@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+# $2 memory used
+# $3 free
+#
+function memory() {
+	printf $(free -m | awk 'NR==2{print"%.0f%%\t\t",$3*100/$2}')
+}
+
+function get_usage() {
+	echo $(free -h | awk 'NR==2{print $2" / "$3}')
+	
+}
+
+if [[ $1 == "--mem" ]]; then
+	get_usage
+elif [[ $1 == "--get_p" ]]; then
+	memory
+fi
