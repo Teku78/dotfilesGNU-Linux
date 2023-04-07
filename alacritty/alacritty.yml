@@ -1,4 +1,5 @@
-
+# import:
+  # - 
 #
 # Set environment variables
 env:
@@ -67,12 +68,12 @@ cursor:
 
 colors:
   primary:
-    background: '#05090f'
-    foreground: '#C0CAF5'
+    background: '#070c14'
+    foreground: '#A6CDFF'
 
   cursor:
-    text:   '#05090f'
-    cursor: '#EEFFFF'
+    text:   '#000000'
+    cursor: '#FFFFFF'
 
   # Normal colors
   normal:
@@ -80,18 +81,18 @@ colors:
     red:     '#F43e5c'
     green:   '#00ff6f'
     yellow:  '#Fbe32f'
-    blue:    '#00afff'
+    blue:    '#0086ff'
     magenta: '#b170f3'
-    cyan:    '#00fdd2'
+    cyan:    '#2ee7b6'
     white:   '#bfc9f4'
 
   # Bright colors
   bright:
-    black:   '#404767'
+    black:   '#8b949e'
     red:     '#f87171'
-    green:   '#39d5a5'
+    green:   '#49e1ad'
     yellow:  '#Fbe32f'
-    blue:    '#74baff'
+    blue:    '#0086ff'
     magenta: '#b87fe1'
     cyan:    '#7EDDDE'
     white:   '#ffffff'
@@ -103,7 +104,7 @@ key_bindings:
   - { key: Down, mods: Shift, action: ScrollPageDown, mode: ~Alt           }
   - { key: Home,     mods: Shift, action: ScrollToTop,    mode: ~Alt       }
   - { key: End,      mods: Shift, action: ScrollToBottom, mode: ~Alt       }
-  # Toggle full screen you are need install wmctrl
+  # Toggle full screen, you have to need to install wmctrl
   #  - { key: F11, command: { program: "wmctrl", args: ["-r", ":ACTIVE:", "-b", "toggle,fullscreen" ] } }
 
 

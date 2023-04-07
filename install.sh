@@ -32,7 +32,7 @@ function link_files () {
 }
 
 function clean_up {
-	# This when everything finish
+	# Clean everything after installation
 	#
 	echo " Clean package cache..."
 	sudo pacman -Sc --noconfirm &> /dev/null

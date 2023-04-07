@@ -9,35 +9,36 @@
 -- =============================================================
 --
 import XMonad
-import System.IO (hPutStrLn) -- for xmobar
+import System.IO (hPutStrLn) -- for xmobar output
 import System.Exit
 import Data.Monoid
 import qualified Data.Map as M
-import Data.Ratio --permite usar el operador '%'
+import Data.Ratio -- %
 
 --import Graphics.X11.ExtraTypes.XF86
 import XMonad.Hooks.ManageDocks
 
 import qualified XMonad.StackSet as W
 
-import XMonad.Layout.IndependentScreens
-import XMonad.Actions.Warp (warpToScreen)
-import Foreign.C (CInt)
-------------------------------------------------------------------------------------------
--- Hooks
+--import XMonad.Layout.IndependentScreens
+--import XMonad.Actions.Warp (warpToScreen)
+
+-- Status bar
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
+
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageHelpers (composeOne, isFullscreen, isDialog, doFullFloat, doCenterFloat)
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageHelpers (composeOne, isFullscreen, isDialog, doFullFloat, doCenterFloat)
 
 import XMonad.Util.Run -- For spawnPipe and hPutStrLn
+import XMonad.Util.SpawnOnce
 import XMonad.Util.Cursor
 import XMonad.Util.EZConfig (additionalKeysP)
 
 import XMonad.Config.Desktop
-------------------------------------------------------------------------------------------
+
 -- windows actions
 import XMonad.Actions.UpdatePointer (updatePointer)
 import XMonad.Actions.WithAll (sinkAll)
@@ -60,7 +61,6 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, MIRROR, NOBORDERS))
 
-
 ------------------------------------------------------------------------------------------
 myTerminal           = "alacritty" :: String     -- Terminal
 myModMask            = mod4Mask    :: KeyMask    -- leader key (windows)
@@ -72,13 +72,11 @@ myClickJustFocuses   = False       :: Bool
 
 -- Start Up --------------------------------------------------------------------------------------
 myStartupHook :: X ()
-myStartupHook = do
-	
-	spawn "xrandr --output HDMI1 --primary --auto --output eDP1 --auto --below HDMI1"
-	--spawn "xmonad --restart"
+myStartupHook = do	
 	spawn "~/.fehbg" -- Set background
     -- spawn "killall picom;sleep 2; picom --experimental-backends"
-	setDefaultCursor xC_left_ptr -- Set cursor theme
+	setDefaultCursor xC_left_ptr -- Fix cursor theme
+	spawn "xrandr --output HDMI1 --primary --auto --output eDP1 --auto --below HDMI1"
 
 -- Rule of the windows --------------------------------------------------------------------------- 
 myManageHook = composeOne [
@@ -96,37 +94,34 @@ myManageHook = composeOne [
     , isFullscreen --> doFullFloat
     ]
 
-----------------------------------------------------------------------------------------
--- WORKSPACE
+-- Workpace --------------------------------------------------------------------------------------
 
--- Define my workspace in this case 5
 myWorkSpaces :: [String]
---myWorkSpaces = map show [1..5 :: Int]
+
+-- myWorkSpaces = map show [1..5 :: Int] -- Another way to define workpaces
 myWorkSpaces = ["1", "2"]
--- Icons for identify the workspaces
-currentWorkspace :: String -> String
-currentWorkspace _ = "<fn=1>\xF0BAF</fn>" -- pacman
-
+-- Icons for identify the status of the workpace
+currentWorkspace  :: String -> String
 occupiedWorkspace :: String -> String
-occupiedWorkspace _ = "<fn=1>\xF02A0</fn>" -- ghost
+screen2Workspace  :: String -> String
 
-otherWorkspace :: String -> String
-otherWorkspace _ = "<fn=1>\xF02A0</fn>" -- ghost, too
+currentWorkspace  _ = "<fn=1>\xF0BAF</fn>" 
+occupiedWorkspace _ = "<fn=1>\xF02A0</fn>"
+screen2Workspace  _ = "<fn=1>\xF02A0</fn>"
 
--- this is to show the number of windows in each workspace.
+-- this show the number of windows for each workspace.
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
-----------------------------------------------------------------------------------------
--- LAYOUTS.
+-- Layouts --------------------------------------------------------------------------------------
+
 -- define the size of gaps
 mySpacing = spacingRaw False             -- False=Apply even when single window
-                       (Border 5 5 5 5)  -- Sreen border size top bot right lefth
+                       (Border 8 8 8 8)  -- Sreen border size top bot right lefth
                        True              -- Enable sreen boder
-                       (Border 5 5 5 5)  -- Window Border size
+                       (Border 8 8 8 8)  -- Window Border size
                        True              -- Enable window borders
 
--- My Layouts
 myLayoutHook = avoidStruts $ tall ||| grid ||| full
 	where
 		
@@ -152,7 +147,7 @@ myLogHook one two = xmobarPP {
 
    -- , ppCurrent         = xmobarColor "#050608,#bfc9f4" "" . wrap (xmobarColor"#050608,#bfc9f4" "" "\xe0b0")(xmobarColor"#bfc9f4" "" "\xe0b0") . currentWorkspace
     , ppCurrent         = xmobarColor "#ffc857" "" . currentWorkspace
-    , ppVisible         = xmobarColor "#ff1767" "" . otherWorkspace -- . wrap ("")("") -- . \s -> " \xf878 "
+    , ppVisible         = xmobarColor "#ff1767" "" . screen2Workspace -- . wrap ("")("") -- . \s -> " \xf878 "
     , ppHiddenNoWindows = xmobarColor "#223045" "" . occupiedWorkspace
     , ppHidden          = xmobarColor "#29c1dc" "" . occupiedWorkspace
     , ppTitle           = xmobarColor "#bfc9f4" "" . shorten 55
@@ -239,7 +234,7 @@ main = do
     , clickJustFocuses      = myClickJustFocuses
     , mouseBindings         = myMouseBindings
     , layoutHook            = myLayoutHook
-    , workspaces            = withScreens 2 myWorkSpaces
+    , workspaces            = myWorkSpaces
     , startupHook           = myStartupHook
     , manageHook            = myManageHook <+> manageDocks
     , logHook               = (dynamicLogWithPP $ myLogHook laptopBar extrMonitorBar) >> updatePointer(0.5,0.5)(0.5, 0.5)

@@ -45,3 +45,13 @@ ffmpegthumbnailer
 libopenraw
 poppler-glib
 lxappearance
+#
+xarchiver
+zip
+unzip
+unrar
+xz
+gzip
+
+zathura
+zathura-pdf-mupdf
